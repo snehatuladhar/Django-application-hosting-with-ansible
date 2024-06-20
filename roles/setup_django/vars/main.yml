@@ -1,0 +1,4 @@
+---
+repo_url: "https://github.com/yeshwanthlm/django-on-ec2.git"
+project_dir: /home/ubuntu/django-on-ec2
+requirements_file: requirements.txt

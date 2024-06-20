@@ -1,0 +1,27 @@
+---
+- name: Run Django server
+  command: "python3 {{ project_dir }}/manage.py runserver 0.0.0.0:{{ django_port }}"
+  args:
+    chdir: "{{ project_dir }}"
+  async: 10
+  poll: 0
+
+# - name: Allow incoming traffic on port 8000
+#   ec2_security_group:
+#     name: "{{ ec2_security_group }}"
+#     region: "{{ ec2_region }}"
+#     rules:
+#       - proto: tcp
+#         from_port: "{{ django_port }}"
+#         to_port: "{{ django_port }}"
+#         cidr_ip: 0.0.0.0/0
+#     rules_egress:
+#       - proto: all
+#         from_port: 1
+#         to_port: 65535
+#         cidr_ip: 0.0.0.0/0
+#   when: ec2_security_group is defined and ec2_region is defined
+
+- name: Notify user of Django server address
+  debug:
+    msg: "Django application is running at http://{{ inventory_hostname }}:{{ django_port }}"
