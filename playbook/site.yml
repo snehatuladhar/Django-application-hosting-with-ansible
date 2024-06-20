@@ -5,6 +5,7 @@
     - pyenv
     - setup_django
     - deploy_django
+    -
     
 
   vars:

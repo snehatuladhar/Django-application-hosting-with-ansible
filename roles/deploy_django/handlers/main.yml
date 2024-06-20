@@ -1,0 +1,6 @@
+- name: Run Django server
+  command: "python3 {{ project_dir }}/manage.py runserver 0.0.0.0:{{ django_port }}"
+  args:
+    chdir: "{{ project_dir }}"
+  async: 10
+  poll: 0
