@@ -1,0 +1,27 @@
+---
+repo_url: "https://github.com/yeshwanthlm/django-on-ec2.git"
+project_dir: /home/ubuntu/django-on-ec2
+requirements_file: requirements.txt
+
+system_packages:
+  - git
+  - python3
+  - python3-pip
+  - python3-venv
+  - python3-django
+  - python3-psycopg2
+  - build-essential
+  - libssl-dev
+  - libffi-dev
+  - libxml2-dev
+  - libxmlsec1-dev
+  - libbz2-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - zlib1g-dev
+  - wget
+  - curl
+  - llvm
+  - xz-utils
+  - tk-dev
+

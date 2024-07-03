@@ -1,0 +1,75 @@
+---
+- name: Install pyenv dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_packages }}"
+  update_cache: yes
+
+- name: Download pyenv script
+  ansible.builtin.get_url:
+    dest: /tmp/pyenv.sh
+    url: https://pyenv.run
+    mode: "0555"
+
+- name: Execute pyenv install script
+  ansible.builtin.script:
+    cmd: /tmp/pyenv.sh
+    creates: "{{ ansible_env.HOME }}/.pyenv"
+
+- name: Ensure pyenv is in PATH
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export PATH="$HOME/.pyenv/bin:$PATH"'
+    state: present
+
+- name: Initialize pyenv in shell
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'eval "$(pyenv init --path)"'
+    state: present
+
+- name: Reload bashrc
+  ansible.builtin.shell: . ~/.bashrc
+
+- name: Install first python version
+  pyenv:
+    command: install
+    version: "{{ first_python_version }}"
+
+- name: Create dir for first python version
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/{{ first_target_dir }}"
+    state: directory
+
+- name: Set target python version in first directory
+  pyenv:
+    command: local
+    version: "{{ first_python_version }}"
+    chdir: "{{ ansible_env.HOME }}/{{ first_target_dir }}"
+
+- name: Install second python version
+  pyenv:
+    command: install
+    version: "{{ second_python_version }}"
+
+- name: Create dir for second python version
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/{{ second_target_dir }}"
+    state: directory
+
+- name: Set target python version in second directory
+  pyenv:
+    command: local
+    version: "{{ second_python_version }}"
+    chdir: "{{ ansible_env.HOME }}/{{ second_target_dir }}"
+
+- name: Install global python version
+  pyenv:
+    command: install
+    version: "{{ global_python_version }}"
+
+- name: Set global python version
+  pyenv:
+    command: global
+    version: "{{ global_python_version }}"

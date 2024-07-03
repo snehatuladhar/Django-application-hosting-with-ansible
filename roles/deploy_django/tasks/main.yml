@@ -1,0 +1,4 @@
+---
+- name: Notify user of Django server address
+  debug:
+    msg: "Django application is running at http://{{ inventory_hostname }}:{{ django_port }}"

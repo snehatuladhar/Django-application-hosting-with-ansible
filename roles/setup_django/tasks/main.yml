@@ -1,0 +1,44 @@
+---
+- name: Install system packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_packages }}"
+  update_cache: yes
+
+- name: Set up PYTHONPATH
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: "export PYTHONPATH=/usr/lib/python3/dist-packages"
+    environment:
+      HOME: "{{ ansible_env.HOME }}"
+      tags:
+        - pyenv
+
+
+- name: Clone Django project repository
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ project_dir }}"
+    force: yes
+
+- name: Install project dependencies using apt
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3-django
+    - python3-psycopg2
+
+- name: Run Django migrations
+  command: "python3 {{ project_dir }}/manage.py migrate"
+  args:
+    chdir: "{{ project_dir }}"
+
+- name: Create Django superuser (optional)
+  command: "python3 {{ project_dir }}/manage.py createsuperuser --noinput --username admin --email admin@example.com"
+  args:
+    chdir: "{{ project_dir }}"
+  environment:
+    DJANGO_SUPERUSER_PASSWORD: "admin123"
+  ignore_errors: true

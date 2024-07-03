@@ -1,0 +1,25 @@
+---
+first_python_version: "3.8"
+second_python_version: "3.9"
+global_python_version: "3.10"
+first_target_dir: firstpy
+second_target_dir: secondpy
+
+system_packages:
+    - make
+    - build-essential
+    - libssl-dev
+    - zlib1g-dev
+    - libbz2-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - wget
+    - curl
+    - llvm
+    - libncursesw5-dev
+    - xz-utils
+    - tk-dev
+    - libxml2-dev
+    - libxmlsec1-dev
+    - libffi-dev
+    - liblzma-dev

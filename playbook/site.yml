@@ -1,0 +1,12 @@
+---
+- hosts: servers
+  become: yes
+  roles:
+    - pyenv
+    - setup_django
+    - deploy_django
+    -
+    
+
+  vars:
+    ansible_user: ubuntu

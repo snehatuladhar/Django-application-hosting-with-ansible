@@ -1,0 +1,3 @@
+[servers]
+44.222.127.128 ansible_user=ubuntu ansible_ssh_private_key_file=/Users/snehatuladhar/Documents/cloudintern/pyenv/ami-sneha.pem
+
